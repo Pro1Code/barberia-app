@@ -1,0 +1,645 @@
+#:kivy 2.0
+#:import Factory kivy.factory.Factory
+
+<Label>:
+    font_name: 'C:/Windows/Fonts/seguiemj.ttf'
+    font_size: sp(16)
+    color: 0.9, 0.9, 0.9, 1
+
+<Button>:
+    font_size: sp(18)
+    background_normal: ''
+    background_color: 0.3, 0.3, 0.3, 1
+    color: 1, 1, 1, 1
+    size_hint_y: None
+    height: dp(50)
+    border: (10, 10, 10, 10)
+
+<TextInput>:
+    font_size: sp(16)
+    background_normal: ''
+    background_color: 0.15, 0.15, 0.15, 1
+    foreground_color: 1, 1, 1, 1
+    cursor_color: 0.9, 0.2, 0.2, 1
+    border: (4, 4, 4, 4)
+    padding: [10, 10]
+    size_hint_y: None
+    height: dp(45)
+
+<Popup>:
+    background: 'atlas://data/images/defaulttheme/button_pressed'
+    background_color: 0.1, 0.1, 0.1, 0.95
+    title_color: 1, 1, 1, 1
+    title_size: sp(20)
+    separator_color: 0.9, 0.2, 0.2, 1
+
+<Spinner>:
+    background_normal: ''
+    background_color: 0.2, 0.2, 0.2, 1
+    color: 1, 1, 1, 1
+    height: dp(45)
+    font_size: sp(16)
+
+# ---------- PANTALLA LOGIN ----------
+<LoginScreen>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            source: 'images/fondo_madera.jpg'
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 0, 0, 0, 0.7
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 0.9, 0.2, 0.2, 0.3
+        Rectangle:
+            pos: self.x, self.top - dp(100)
+            size: self.width, dp(3)
+        Rectangle:
+            pos: self.x, self.y + dp(100)
+            size: self.width, dp(3)
+    
+    FloatLayout:
+        # Contenedor para logo y campos
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: (1, 0.75)
+            pos_hint: {'top': 0.95}
+            padding: dp(40)
+            spacing: dp(15)
+            
+            # Logo
+            Image:
+                source: 'images/logo.png'
+                size_hint_y: 0.35
+                keep_ratio: True
+                allow_stretch: True
+            
+            Label:
+                text: 'Usuario:'
+                font_size: sp(18)
+                halign: 'left'
+                size_hint_y: 0.05
+                color: 0.9, 0.9, 0.9, 1
+            
+            TextInput:
+                id: usuario
+                multiline: False
+                hint_text: 'Ingresa tu usuario'
+                hint_text_color: 0.7, 0.7, 0.7, 1
+                background_color: 0.2, 0.2, 0.2, 0.9
+                size_hint_y: None
+                height: dp(50)
+            
+            Label:
+                text: 'Contraseña:'
+                font_size: sp(18)
+                halign: 'left'
+                size_hint_y: 0.05
+                color: 0.9, 0.9, 0.9, 1
+            
+            TextInput:
+                id: contraseña
+                multiline: False
+                password: True
+                hint_text: '••••••••'
+                hint_text_color: 0.7, 0.7, 0.7, 1
+                background_color: 0.2, 0.2, 0.2, 0.9
+                size_hint_y: None
+                height: dp(50)
+        
+        # Botón INGRESAR (con texto rojo y bordes redondeados)
+        Button:
+            text: 'INGRESAR'
+            background_color: 0.9, 0.2, 0.2, 1
+            background_normal: ''
+            color: 1, 1, 1, 1
+            font_size: sp(22)
+            bold: True
+            size_hint: (0.8, 0.1)
+            pos_hint: {'center_x': 0.5, 'y': 0.12}
+            on_press: root.validar_login()
+            canvas.before:
+                Color:
+                    rgba: 0.9, 0.2, 0.2, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [30, 30, 30, 30]
+        
+        # Botón REGISTRARSE
+        Button:
+            text: 'REGISTRARSE'
+            background_color: 0.3, 0.3, 0.3, 1
+            background_normal: ''
+            color: 1, 1, 1, 1
+            font_size: sp(18)
+            bold: True
+            size_hint: (0.8, 0.08)
+            pos_hint: {'center_x': 0.5, 'y': 0.03}
+            on_press: root.ir_registro()
+            canvas.before:
+                Color:
+                    rgba: 0.3, 0.3, 0.3, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [25, 25, 25, 25]
+
+# ---------- PANTALLA REGISTRO ----------
+<RegistroScreen>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            source: 'images/fondo_madera.jpg'
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 0, 0, 0, 0.7
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 0.9, 0.2, 0.2, 0.3
+        Rectangle:
+            pos: self.x, self.top - dp(100)
+            size: self.width, dp(3)
+        Rectangle:
+            pos: self.x, self.y + dp(100)
+            size: self.width, dp(3)
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(30)
+        spacing: dp(10)
+
+        Label:
+            text: '📝 REGISTRO DE CLIENTE'
+            font_size: sp(24)
+            color: 0.9, 0.2, 0.2, 1
+            bold: True
+            size_hint_y: 0.1
+
+        Label:
+            text: 'Usuario:*'
+            font_size: sp(16)
+            size_hint_y: 0.05
+
+        TextInput:
+            id: nombre_usuario
+            multiline: False
+            hint_text: 'Elige un nombre de usuario'
+            size_hint_y: 0.08
+
+        Label:
+            text: 'Contraseña:*'
+            font_size: sp(16)
+            size_hint_y: 0.05
+
+        TextInput:
+            id: contraseña
+            multiline: False
+            password: True
+            hint_text: '••••••••'
+            size_hint_y: 0.08
+
+        Label:
+            text: 'Confirmar contraseña:*'
+            font_size: sp(16)
+            size_hint_y: 0.05
+
+        TextInput:
+            id: confirmar
+            multiline: False
+            password: True
+            hint_text: '••••••••'
+            size_hint_y: 0.08
+
+        Label:
+            text: 'Nombre completo:*'
+            font_size: sp(16)
+            size_hint_y: 0.05
+
+        TextInput:
+            id: nombre_completo
+            multiline: False
+            hint_text: 'Tu nombre y apellidos'
+            size_hint_y: 0.08
+
+        Label:
+            text: 'Email:'
+            font_size: sp(16)
+            size_hint_y: 0.05
+
+        TextInput:
+            id: email
+            multiline: False
+            hint_text: 'correo@ejemplo.com'
+            size_hint_y: 0.08
+
+        Label:
+            text: 'Teléfono:'
+            font_size: sp(16)
+            size_hint_y: 0.05
+
+        TextInput:
+            id: telefono
+            multiline: False
+            hint_text: 'Número de contacto'
+            size_hint_y: 0.08
+
+        Button:
+            text: 'REGISTRARME'
+            background_color: 0.9, 0.2, 0.2, 1
+            font_size: sp(20)
+            bold: True
+            size_hint_y: 0.1
+            on_press: root.registrar()
+
+        Button:
+            text: '← VOLVER AL LOGIN'
+            background_color: 0.3, 0.3, 0.3, 1
+            font_size: sp(16)
+            size_hint_y: 0.08
+            on_press: root.volver_login()
+
+# ---------- PANTALLA PRINCIPAL ----------
+<PrincipalScreen>:
+    canvas.before:
+        Color:
+            rgba: 0.08, 0.08, 0.08, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 1, 1, 1, 0.1
+        Rectangle:
+            source: 'images/silla_barber.png'
+            pos: self.center_x - dp(200), self.center_y - dp(200)
+            size: dp(400), dp(400)
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        BoxLayout:
+            size_hint_y: 0.05
+            canvas.before:
+                Color:
+                    rgba: 0.9, 0.2, 0.2, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        BoxLayout:
+            id: contenido
+            orientation: 'vertical'
+            size_hint_y: 0.80
+
+        BoxLayout:
+            id: barra_inferior
+            size_hint_y: 0.15
+            spacing: 0
+            padding: 0
+
+            Button:
+                id: btn_barberos
+                background_normal: 'images/iconos/barberos_normal.png'
+                background_down: 'images/iconos/barberos_pressed.png'
+                text: ''
+                on_press: root.mostrar_barberos()
+                border: (0, 0, 0, 0)
+
+            Button:
+                id: btn_nuevo
+                background_normal: 'images/iconos/nuevo_corte_normal.png'
+                background_down: 'images/iconos/nuevo_corte_pressed.png'
+                text: ''
+                on_press: root.mostrar_nuevo_corte_activo()
+                border: (0, 0, 0, 0)
+
+            Button:
+                id: btn_cortes
+                background_normal: 'images/iconos/cortes_normal.png'
+                background_down: 'images/iconos/cortes_pressed.png'
+                text: ''
+                on_press: root.mostrar_cortes()
+                border: (0, 0, 0, 0)
+
+# ---------- CONTENIDO: NUEVO CORTE ----------
+<ContenidoNuevoCorte>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(30)
+        spacing: dp(20)
+
+        Image:
+            source: 'images/decoraciones/Titulo_Nuevo_Corte.png'
+            size_hint_y: None
+            height: dp(80)
+            keep_ratio: True
+            allow_stretch: True
+
+        Label:
+            text: 'Presiona el botón rojo\npara comenzar un nuevo corte'
+            font_size: sp(22)
+            halign: 'center'
+            color: 0.9, 0.9, 0.9, 1
+            size_hint_y: None
+            height: dp(80)
+
+        Button:
+            background_normal: 'images/botones/Botón_Comenzar_Normal.png'
+            background_down: 'images/botones/Botón_Comenzar_Pressed.png'
+            text: ''
+            size_hint_y: None
+            height: dp(80)
+            on_press: root.iniciar_nuevo_corte()
+            border: (0, 0, 0, 0)
+
+# ---------- MENÚ NUEVO CORTE ----------
+<MenuCorteScreen>:
+    canvas.before:
+        Color:
+            rgba: 0.08, 0.08, 0.08, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 1, 1, 1, 0.1
+        Rectangle:
+            source: 'images/iconos/girar_barber.png'
+            pos: self.center_x - dp(150), self.center_y - dp(150)
+            size: dp(300), dp(300)
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(40)
+        spacing: dp(20)
+
+        Image:
+            source: 'images/decoraciones/Titulo_Nuevo_Corte.png'
+            size_hint_y: None
+            height: dp(80)
+            keep_ratio: True
+            allow_stretch: True
+
+        Image:
+            source: 'images/decoraciones/Bigote_Decorativo.png'
+            size_hint_y: None
+            height: dp(40)
+            keep_ratio: True
+            allow_stretch: True
+
+        Label:
+            id: bienvenida
+            text: ''
+            font_size: sp(24)
+            color: 1, 1, 1, 1
+            bold: True
+            size_hint_y: None
+            height: dp(40)
+
+        Button:
+            background_normal: 'images/botones/Botón_Comenzar_Normal.png'
+            background_down: 'images/botones/Botón_Comenzar_Pressed.png'
+            text: ''
+            size_hint_y: None
+            height: dp(80)
+            on_press: root.mostrar_popup_nombre_corte()
+            border: (0, 0, 0, 0)
+
+        Button:
+            background_normal: 'images/botones/Botón_Volver_Normal.png'
+            background_down: 'images/botones/Botón_Volver_Pressed.png'
+            text: ''
+            size_hint_y: None
+            height: dp(50)
+            on_press: root.volver_principal()
+            border: (0, 0, 0, 0)
+
+# ---------- CONTENIDO: BARBEROS ----------
+<ContenidoBarberos>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(20)
+        spacing: dp(15)
+
+        Image:
+            source: 'images/decoraciones/Titulo_Barberos.png'
+            size_hint_y: None
+            height: dp(60)
+            keep_ratio: True
+            allow_stretch: True
+
+        Spinner:
+            id: spinner_barberos
+            text: 'Selecciona un barbero'
+            values: []
+            size_hint_y: None
+            height: dp(45)
+            background_color: 0.3, 0.3, 0.3, 1
+            color: 1, 1, 1, 1
+
+        Label:
+            id: resultado_barberos
+            text: 'Selecciona un barbero para ver sus estadísticas'
+            size_hint_y: None
+            height: dp(300)
+            halign: 'left'
+            valign: 'top'
+            text_size: (root.width - dp(40), None)
+
+# ---------- CONTENIDO: CORTES ----------
+<ContenidoCortes>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(20)
+        spacing: dp(10)
+
+        Image:
+            source: 'images/decoraciones/Titulo_Cortes.png'
+            size_hint_y: None
+            height: dp(60)
+            keep_ratio: True
+            allow_stretch: True
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(45)
+            spacing: dp(5)
+
+            TextInput:
+                id: corte_input
+                hint_text: 'Nombre del corte...'
+                multiline: False
+
+            Button:
+                text: 'Buscar'
+                size_hint_x: 0.3
+                on_press: root.buscar_corte()
+
+        Label:
+            id: resultado_cortes
+            text: 'Ingresa un nombre para buscar'
+            size_hint_y: None
+            height: dp(300)
+            halign: 'left'
+            valign: 'top'
+            text_size: (root.width - dp(40), None)
+
+# ---------- TEMPORIZADOR ----------
+<TemporizadorScreen>:
+    canvas.before:
+        Color:
+            rgba: 0.05, 0.05, 0.05, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 0.9, 0.2, 0.2, 0.1
+        Ellipse:
+            pos: self.center_x - dp(180), self.center_y - dp(100)
+            size: dp(360), dp(360)
+        Color:
+            rgba: 1, 1, 1, 0.05
+        Rectangle:
+            source: 'images/decoraciones/Navaja_Decorativa.png'
+            pos: self.right - dp(150), self.y + dp(50)
+            size: dp(100), dp(100)
+        PushMatrix:
+        Rotate:
+            angle: 30
+            origin: self.x + dp(90), self.top - dp(110)
+        Color:
+            rgba: 1, 1, 1, 0.05
+        Rectangle:
+            source: 'images/decoraciones/Peine_Decorativo.png'
+            pos: self.x + dp(50), self.top - dp(150)
+            size: dp(80), dp(80)
+        PopMatrix:
+        Color:
+            rgba: 1, 1, 1, 0.05
+        Rectangle:
+            source: 'images/decoraciones/Bigote_Decorativo.png'
+            pos: self.center_x - dp(50), self.center_y - dp(200)
+            size: dp(100), dp(50)
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(30)
+        spacing: dp(15)
+
+        Label:
+            id: titulo_corte
+            text: ''
+            font_size: sp(28)
+            color: 0.9, 0.2, 0.2, 1
+            bold: True
+            size_hint_y: None
+            height: dp(40)
+
+        Label:
+            id: contador_label
+            text: '00:00'
+            font_size: sp(120)
+            color: 1, 1, 1, 1
+            bold: True
+            size_hint_y: None
+            height: dp(200)
+            canvas.before:
+                Color:
+                    rgba: 0.15, 0.15, 0.15, 0.8
+                RoundedRectangle:
+                    pos: self.center_x - dp(150), self.center_y - dp(60)
+                    size: dp(300), dp(120)
+                    radius: [20, 20, 20, 20]
+
+        Button:
+            id: btn_finalizar
+            background_normal: 'images/botones/Botón_Finalizar_Normal.png'
+            background_down: 'images/botones/Botón_Finalizar_Pressed.png'
+            text: ''
+            size_hint_y: None
+            height: dp(70)
+            disabled: True
+            on_press: root.finalizar_corte()
+            border: (0, 0, 0, 0)
+
+        Button:
+            id: btn_pausa
+            background_normal: 'images/botones/Botón_Pausa_Normal.png'
+            background_down: 'images/botones/Botón_Pausa_Pressed.png'
+            text: ''
+            size_hint_y: None
+            height: dp(50)
+            disabled: True
+            on_press: root.pausar_temporizador()
+            border: (0, 0, 0, 0)
+
+# ---------- CÁMARA ----------
+<CamaraScreen>:
+    canvas.before:
+        Color:
+            rgba: 0.05, 0.05, 0.05, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 1, 1, 1, 0.05
+        Rectangle:
+            source: 'images/iconos/logo.png'
+            pos: self.x + dp(20), self.y + dp(20)
+            size: dp(80), dp(80)
+    
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(30)
+        spacing: dp(15)
+        
+        Label:
+            text: '📸 GRABANDO'
+            font_size: sp(36)
+            color: 0.9, 0.2, 0.2, 1
+            bold: True
+            size_hint_y: None
+            height: dp(60)
+        
+        Label:
+            id: instrucciones_label
+            text: 'La cámara se abrirá en...'
+            font_size: sp(20)
+            color: 0.8, 0.8, 0.8, 1
+            size_hint_y: None
+            height: dp(40)
+        
+        Label:
+            id: contador_grabacion
+            text: '5'
+            font_size: sp(150)
+            color: 0.9, 0.2, 0.2, 1
+            bold: True
+            size_hint_y: None
+            height: dp(200)
+        
+        Label:
+            id: estado_label
+            text: 'Preparando...'
+            font_size: sp(22)
+            color: 1, 1, 1, 1
+            size_hint_y: None
+            height: dp(40)
+        
+        Button:
+            id: btn_manual
+            background_normal: 'images/botones/Botón_Cámara_Normal.png'
+            background_down: 'images/botones/Botón_Cámara_Pressed.png'
+            text: ''
+            size_hint_y: None
+            height: dp(50)
+            on_press: root.abrir_camara_manual()
+            border: (0, 0, 0, 0)
