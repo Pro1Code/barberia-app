@@ -33,27 +33,27 @@ jobs:
     - name: Create buildozer.spec
       run: |
         cat > buildozer.spec << 'EOF'
-[app]
-title = Barbería App
-package.name = barberiaapp
-package.domain = org.barberia
-version = 1.0.0
-source.dir = ./
-source.include_exts = py,png,jpg,kv,atlas,ttf,db
-requirements = python3==3.9.19,kivy==2.3.0,plyer,pillow,qrcode
-android.permissions = CAMERA, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, INTERNET
-android.api = 30
-android.minapi = 21
-android.ndk = 25b
-orientation = portrait
-fullscreen = 0
-EOF
-    
-    - name: Build APK
-      run: buildozer android debug
-    
-    - name: Upload APK
-      uses: actions/upload-artifact@v4
-      with:
-        name: barberia-app-apk
-        path: bin/*.apk
+        [app]
+        title = Barbería App
+        package.name = barberiaapp
+        package.domain = org.barberia
+        version = 1.0.0
+        source.dir = ./
+        source.include_exts = py,png,jpg,kv,atlas,ttf,db
+        requirements = python3==3.9.19,kivy==2.3.0,plyer,pillow,qrcode
+        android.permissions = CAMERA, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, INTERNET
+        android.api = 30
+        android.minapi = 21
+        android.ndk = 25b
+        orientation = portrait
+        fullscreen = 0
+        EOF
+            
+            - name: Build APK
+              run: buildozer android debug
+            
+            - name: Upload APK
+              uses: actions/upload-artifact@v4
+              with:
+                name: barberia-app-apk
+                path: bin/*.apk
